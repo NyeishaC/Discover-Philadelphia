@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Discover Philadelphia"
+description = "A one-page Philadelphia learning site that shows a cheesesteak photo and city facts, animates Pennsylvania’s state bird on click, and lets visitors add favorite things about the city in the current browser session."
+version = "1.0.0"
+id = "artifacts/discover-philadelphia"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23693
+
+[services.development]
+run = "pnpm --filter @workspace/discover-philadelphia run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/discover-philadelphia", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/discover-philadelphia/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23693"
+BASE_PATH = "/"
