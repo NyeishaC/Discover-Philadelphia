@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { ArrowDown, Plus } from 'lucide-react';
+import { Menu, Plus, Search, Sparkles, ChevronDown, X } from 'lucide-react';
 
 type Favorite = {
   id: number;
@@ -26,10 +26,22 @@ function RuffedGrouseIllustration({ shaking }: { shaking: boolean }) {
   );
 }
 
+function AccessibilityFigureIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none">
+      <circle cx="12" cy="4.5" r="2" fill="currentColor" />
+      <path d="M12 8v7m0-5L5 7m7 3 7-3m-7 8-5 6m5-6 5 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function Home() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [favoriteInput, setFavoriteInput] = useState('');
   const [birdIsShaking, setBirdIsShaking] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [accessibilityOpen, setAccessibilityOpen] = useState(false);
+  const [largeText, setLargeText] = useState(false);
 
   function addFavorite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,45 +59,51 @@ function Home() {
 
   return (
     <main>
-      <div className="page-shell">
-        <header className="topbar">
-          <a className="brand" href="#top" data-testid="link-home">
-            <span className="brand-mark" aria-hidden="true">P</span>
-            <span className="brand-name">A little Philly</span>
+      <div className={`page-shell${largeText ? ' large-text' : ''}`}>
+        <header className="site-header">
+          <a className="brand" href="#top" aria-label="Visit Philadelphia home" data-testid="link-home">
+            <span>VISIT</span><span>PHILADELPHIA</span>
           </a>
-          <span className="top-note">A local's pocket guide · Est. 1682</span>
+          <div className="header-content">
+            <div className="utility-links" aria-label="Utility navigation">
+              <a href="#favorites">NEWSLETTERS</a><i>·</i><a href="#the-quick-facts">MEDIA</a><i>·</i>
+              <a href="#mayor">MEETINGS <span aria-hidden="true">↗</span></a><i>·</i>
+              <a href="#top">VISITPA.COM <span aria-hidden="true">↗</span></a><i>·</i>
+              <a href="#top" aria-label="Language: English">◎ EN⌄</a>
+            </div>
+            <button className="mobile-menu-toggle" type="button" aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+            <nav className={`main-nav${menuOpen ? ' is-open' : ''}`} aria-label="Main navigation">
+              <a href="#the-quick-facts" onClick={() => setMenuOpen(false)}>THINGS TO DO <ChevronDown /></a>
+              <a href="#cheesesteak" onClick={() => setMenuOpen(false)}>FOOD &amp; DRINK <ChevronDown /></a>
+              <a href="#city-today" onClick={() => setMenuOpen(false)}>EVENTS <ChevronDown /></a>
+              <a href="#mayor" onClick={() => setMenuOpen(false)}>INSIDER PHILLY <ChevronDown /></a>
+              <a href="#favorites" onClick={() => setMenuOpen(false)}>PHILLY YOUR WAY <ChevronDown /></a>
+              <a href="#the-quick-facts" onClick={() => setMenuOpen(false)}>MAPS &amp; GUIDES <ChevronDown /></a>
+              <a href="#city-today" onClick={() => setMenuOpen(false)}>HOTELS &amp; DEALS <ChevronDown /></a>
+              <a className="nav-search" href="#the-quick-facts" aria-label="Search"><Search size={18} /><span>SEARCH</span></a>
+            </nav>
+          </div>
         </header>
 
         <section className="hero" id="top" aria-labelledby="page-title">
-          <div className="hero-copy-block">
-            <span className="eyebrow">Pennsylvania, in a nutshell</span>
-            <h1 id="page-title">Meet me in <em>Philly.</em></h1>
-            <p className="hero-copy">
-              A city with a big heart, a louder opinion about cheese, and a
-              favorite corner for just about everything. Here’s your first
-              little taste.
-            </p>
-            <a className="hero-link" href="#the-quick-facts" data-testid="link-explore-facts">
-              Take a quick look <span aria-hidden="true"><ArrowDown size={16} /></span>
-            </a>
-          </div>
-          <figure className="food-figure" data-testid="figure-cheesesteak">
-            <img
-              src="/cheesesteak.jpg"
-              alt="A Philadelphia cheesesteak piled with sliced beef, melted cheese, and onions in a toasted roll."
-              data-testid="img-cheesesteak"
-            />
-            <figcaption className="photo-caption">
-              <strong>The Philly cheesesteak</strong>
-              <span>There’s no wrong time for one.</span>
-            </figcaption>
-            <div className="photo-credit" data-testid="text-photo-attribution">
-              Photo by <a href="https://commons.wikimedia.org/wiki/File:Cheesesteak.jpg" target="_blank" rel="noreferrer">jeffreyw</a> / Wikimedia Commons · CC BY 2.0
+          <h1 id="page-title">Welcome to Philadelphia</h1>
+          {accessibilityOpen && (
+            <div className="accessibility-popover" role="group" aria-label="Accessibility settings">
+              <strong>Accessibility</strong>
+              <button type="button" aria-pressed={largeText} onClick={() => setLargeText(!largeText)}>{largeText ? 'Use standard text size' : 'Increase text size'}</button>
             </div>
-          </figure>
+          )}
+          <button className="accessibility-control" type="button" aria-label="Accessibility options" title="Accessibility options" aria-expanded={accessibilityOpen} onClick={() => setAccessibilityOpen(!accessibilityOpen)}>
+            <AccessibilityFigureIcon />
+          </button>
+          <a className="itinerary-button" href="#favorites" onClick={(event) => { event.preventDefault(); document.getElementById('favorites')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+            <Sparkles size={17} aria-hidden="true" /> Build Your Philly Itinerary
+          </a>
         </section>
 
-        <div className="section-rule" />
+        <div className="content-shell">
 
         <section className="intro-grid" id="the-quick-facts" aria-labelledby="facts-title">
           <div>
@@ -113,13 +131,13 @@ function Home() {
         </section>
 
         <section className="side-notes" aria-label="Local snapshots">
-          <article className="note-card">
+          <article className="note-card" id="city-today">
             <span className="note-label">The city today</span>
             <h3>Old soul.<br />Fresh energy.</h3>
             <p>History on every block, and a neighborhood worth getting lost in just around the corner.</p>
             <span className="note-number" aria-hidden="true">01</span>
           </article>
-          <article className="note-card mayor" data-testid="card-mayor">
+          <article className="note-card mayor" id="mayor" data-testid="card-mayor">
             <span className="note-label">At City Hall</span>
             <h3>Cherelle L. Parker</h3>
             <p>Mayor of Philadelphia. The first woman to hold the office.</p>
@@ -150,7 +168,7 @@ function Home() {
             </div>
           </article>
 
-          <section className="favorites" aria-labelledby="favorites-title">
+          <section className="favorites" id="favorites" aria-labelledby="favorites-title">
             <div className="favorites-heading">
               <div>
                 <p className="section-kicker">Your Philly, your picks</p>
@@ -192,12 +210,19 @@ function Home() {
           </section>
         </section>
 
+        <figure className="food-figure" id="cheesesteak" data-testid="figure-cheesesteak">
+          <img src="/cheesesteak.jpg" alt="A Philadelphia cheesesteak piled with sliced beef, melted cheese, and onions in a toasted roll." data-testid="img-cheesesteak" />
+          <figcaption className="photo-caption"><strong>The Philly cheesesteak</strong><span>There’s no wrong time for one.</span></figcaption>
+          <div className="photo-credit" data-testid="text-photo-attribution">Photo by <a href="https://commons.wikimedia.org/wiki/File:Cheesesteak.jpg" target="_blank" rel="noreferrer">jeffreyw</a> / Wikimedia Commons · CC BY 2.0</div>
+        </figure>
         <footer className="footer">
           <div className="footer-inner">
             <span><strong>A little Philly</strong> · A friendly first stop.</span>
             <span>Made for curious visitors and proud locals alike.</span>
+            <span>Hero photo by <a href="https://www.pexels.com/photo/philly-skyline-at-sunset-28050870/" target="_blank" rel="noreferrer">Sarah Williams / Pexels</a>.</span>
           </div>
         </footer>
+        </div>
       </div>
     </main>
   );

@@ -1,0 +1,1 @@
+- [Philadelphia visual direction](philadelphia-visual-direction.md) — Follow the newest Visit Philadelphia-style reference: white two-row header and sunset skyline hero.
