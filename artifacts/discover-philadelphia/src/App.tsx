@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Menu, Plus, Search, Sparkles, ChevronDown, X } from 'lucide-react';
+import DishPhotoGallery from './DishPhotoGallery';
 
 type Favorite = {
   id: number;
@@ -215,6 +216,7 @@ function Home() {
           <figcaption className="photo-caption"><strong>The Philly cheesesteak</strong><span>There’s no wrong time for one.</span></figcaption>
           <div className="photo-credit" data-testid="text-photo-attribution">Photo by <a href="https://commons.wikimedia.org/wiki/File:Cheesesteak.jpg" target="_blank" rel="noreferrer">jeffreyw</a> / Wikimedia Commons · CC BY 2.0</div>
         </figure>
+        <DishPhotoGallery />
         <footer className="footer">
           <div className="footer-inner">
             <span><strong>A little Philly</strong> · A friendly first stop.</span>

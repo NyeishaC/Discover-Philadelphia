@@ -113,6 +113,45 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid 
 .photo-caption span { color: #686c68; font-size: 10px; }
 .photo-credit { margin: 10px 2px 0; color: #74746d; font-size: 10px; text-align: right; }
 .photo-credit a { color: inherit; text-underline-offset: 2px; }
+.dish-gallery { padding: 45px 0 72px; border-top: 1px solid hsl(var(--border)); }
+.dish-gallery-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 23px; }
+.dish-gallery-heading .section-title { font-size: clamp(31px, 3.6vw, 42px); }
+.dish-gallery-intro { margin: 12px 0 0; color: #646b6b; font-size: 13px; line-height: 1.6; }
+.dish-gallery-count { flex: 0 0 auto; color: #777b77; font-size: 11px; }
+.dish-upload-form { padding: 22px; background: #f7f2e8; border: 1px solid #e5dccb; }
+.dish-form-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.dish-field { display: grid; gap: 8px; color: #34434a; font-size: 12px; font-weight: 700; }
+.dish-field small { margin-left: 5px; color: #85827a; font-size: 10px; font-weight: 500; }
+.dish-field input, .dish-field textarea { width: 100%; border: 1px solid #cec7b8; border-radius: 3px; padding: 11px 12px; background: #fffdfa; color: #28343a; font-size: 13px; font-weight: 400; resize: vertical; }
+.dish-field input { height: 44px; }
+.dish-field input::placeholder, .dish-field textarea::placeholder { color: #91918a; }
+.dish-upload-controls { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 17px; }
+.dish-file-area { min-width: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.dish-file-area input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+.dish-file-label { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 13px; border: 1px solid #bcb19e; border-radius: 3px; color: #34434a; font-size: 12px; font-weight: 700; cursor: pointer; }
+.dish-file-label:hover { background: #fffdfa; }
+.dish-file-icon { width: 17px; height: 17px; display: grid; place-items: center; border-radius: 50%; background: #a93443; color: white; font-size: 16px; line-height: 1; }
+.dish-file-name { max-width: 360px; overflow: hidden; color: #75766f; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.dish-submit-button { min-height: 42px; flex: 0 0 auto; padding: 0 18px; border: 0; border-radius: 3px; background: #a93443; color: #fff8eb; font-size: 12px; font-weight: 700; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+.dish-submit-button:hover:not(:disabled) { background: #882938; transform: translateY(-1px); }
+.dish-submit-button:disabled { opacity: .65; cursor: wait; }
+.dish-upload-help { margin: 12px 0 0; color: #777b77; font-size: 10px; }
+.dish-upload-preview { display: flex; align-items: center; gap: 11px; margin-top: 15px; color: #626b70; font-size: 11px; }
+.dish-upload-preview img { width: 58px; height: 58px; border-radius: 3px; object-fit: cover; }
+.dish-feedback { margin: 13px 0 0; font-size: 12px; line-height: 1.5; }
+.dish-feedback.is-error, .dish-gallery-state.is-error { color: #a12636; }
+.dish-feedback.is-success { color: #355e48; }
+.dish-photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; margin-top: 28px; }
+.dish-gallery-state { grid-column: 1 / -1; margin: 0; padding: 23px; border: 1px dashed #cfc6b7; color: #777b77; font-size: 12px; text-align: center; }
+.dish-gallery-state p { margin: 0 0 10px; }
+.dish-gallery-state button { padding: 7px 12px; border: 1px solid #bcb19e; border-radius: 3px; background: #fffdfa; color: #34434a; cursor: pointer; }
+.dish-photo-card { min-width: 0; overflow: hidden; border: 1px solid #e3ddd2; background: #fff; }
+.dish-photo-image { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #f0ece4; }
+.dish-photo-details { padding: 13px 14px 15px; }
+.dish-photo-title-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.dish-photo-title-row h3 { min-width: 0; margin: 0; overflow-wrap: anywhere; font-family: var(--app-font-serif); font-size: 19px; font-weight: 600; line-height: 1.2; }
+.dish-photo-title-row time { flex: 0 0 auto; color: #777b77; font-size: 9px; }
+.dish-photo-caption { margin: 8px 0 0; color: #626b70; font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; }
 .accessibility-control { position: fixed; z-index: 8; left: 16px; bottom: 80px; width: 48px; height: 48px; display: grid; place-items: center; border: 0; border-radius: 50%; background: #7d9bb5; color: white; box-shadow: 0 2px 8px #1525352b; cursor: pointer; }
 .accessibility-popover { position: fixed; z-index: 9; left: 16px; bottom: 136px; display: grid; gap: 10px; width: 220px; padding: 15px; border: 1px solid #d8d2c7; border-radius: 8px; background: #fffdf8; color: #263d46; box-shadow: 0 5px 20px #19232d24; font-size: 13px; }
 .accessibility-popover button { border: 1px solid #c9c0b0; border-radius: 4px; padding: 8px 10px; background: #f6f0e5; color: #263d46; text-align: left; cursor: pointer; }
@@ -141,6 +180,13 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid 
   .community { padding: 43px 0 52px; }
   .food-figure { width: 100%; margin-bottom: 88px; }
   .food-figure img { height: clamp(230px, 65vw, 340px); }
+  .dish-gallery { padding: 38px 0 56px; }
+  .dish-upload-form { padding: 16px; }
+  .dish-form-fields { grid-template-columns: 1fr; gap: 14px; }
+  .dish-upload-controls { align-items: stretch; flex-direction: column; }
+  .dish-submit-button { width: 100%; }
+  .dish-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .dish-photo-title-row { align-items: flex-start; flex-direction: column; gap: 5px; }
   .accessibility-control { position: absolute; left: 12px; bottom: -20px; width: 44px; height: 44px; }
   .accessibility-popover { position: absolute; left: 12px; bottom: 70px; }
   .itinerary-button { position: absolute; right: 10px; bottom: -20px; height: 44px; border-radius: 9px; padding: 0 13px; align-items: center; font-size: 11px; }
@@ -150,6 +196,9 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid 
   .note-card { min-height: 170px; }
   .photo-caption { align-items: flex-start; flex-direction: column; gap: 2px; }
   .food-figure { padding-bottom: 58px; }
+  .dish-gallery-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .dish-photo-grid { grid-template-columns: 1fr; }
+  .dish-photo-title-row { align-items: baseline; flex-direction: row; }
   .bird-panel { padding: 23px 20px; }
   .bird-button { width: 78px; height: 78px; } .bird-svg { width: 57px; height: 57px; }
   .favorites-heading .section-title { font-size: 32px; }

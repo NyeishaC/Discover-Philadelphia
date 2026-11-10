@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: dishes
+    description: Community dish photos
 paths:
   /healthz:
     get:
@@ -24,6 +26,86 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /dishes:
+    get:
+      operationId: listDishPhotos
+      tags: [dishes]
+      summary: List community dish photos
+      description: Returns photos newest first without embedding image data.
+      responses:
+        "200":
+          description: Dish photos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DishPhoto"
+    post:
+      operationId: createDishPhoto
+      tags: [dishes]
+      summary: Submit a dish photo
+      description: Saves a supported dish photo and its visitor-provided details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DishPhotoInput"
+      responses:
+        "201":
+          description: Dish photo created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DishPhoto"
+        "400":
+          description: Invalid dish photo submission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "413":
+          description: Image exceeds the maximum size
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /dishes/{id}/image:
+    get:
+      operationId: getDishPhotoImage
+      tags: [dishes]
+      summary: Fetch a submitted dish photo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dish photo identifier
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: Stored image bytes with the original supported MIME type
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/webp:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Dish photo image not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +115,49 @@ components:
           type: string
       required:
         - status
+    DishPhotoInput:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        caption:
+          type: string
+          maxLength: 500
+        imageData:
+          type: string
+          minLength: 1
+          description: Base64 data URL for a JPEG, PNG, or WebP image.
+      required:
+        - title
+        - imageData
+    DishPhoto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        caption:
+          type: ["string", "null"]
+        imageUrl:
+          type: string
+          format: uri-reference
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - caption
+        - imageUrl
+        - createdAt
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
 
